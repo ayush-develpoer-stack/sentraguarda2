@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentraGuarda | Vanguard Advanced XDR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --bg: #02050d;
+      --panel: #040916;
+      --panel-2: #050b18;
+      --ink: #fbfcff;
+      --muted: #d9deea;
+      --soft: #abb2c0;
+      --line: rgba(197, 215, 235, 0.32);
+      --line-soft: rgba(185, 202, 225, 0.19);
+      --purple: #9d39f2;
+      --purple-2: #cc63ff;
+      --purple-3: #7431da;
+      --gold: #f4a51d;
+      --blue: #48a9ff;
+      --radius: 6px;
+      --pad: clamp(18px, 2.2vw, 34px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #00030a;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: #00030a;
+      font-family: "Inter", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      width: 100%;
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 70% 11%, rgba(113, 23, 183, 0.44), transparent 23%),
+        radial-gradient(circle at 78% 27%, rgba(109, 40, 217, 0.28), transparent 20%),
+        linear-gradient(180deg, #01040b 0%, #020712 44%, #02040a 100%);
+    }
+
+    .wrap {
+      width: 100%;
+      padding-inline: var(--pad);
+    }
+
+    .site-header {
+      height: 80px;
+      background: rgba(1, 4, 11, 0.96);
+      border-bottom: 1px solid rgba(157, 78, 221, 0.18);
+    }
+
+    .nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(18px, 2.8vw, 44px);
+      padding-inline: var(--pad);
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: clamp(46px, 3.8vw, 58px) 1fr;
+      align-items: center;
+      gap: 9px;
+      min-width: clamp(244px, 22vw, 335px);
+    }
+
+    .brand-mark {
+      width: clamp(46px, 3.8vw, 58px);
+      height: clamp(46px, 3.8vw, 58px);
+      display: grid;
+      place-items: center;
+    }
+
+    .brand-mark img {
+      width: clamp(44px, 3.6vw, 56px);
+      filter: drop-shadow(0 0 7px rgba(244, 165, 29, 0.24));
+    }
+
+    .brand-name {
+      display: block;
+      color: #fff;
+      font-size: clamp(25px, 2.1vw, 32px);
+      line-height: 0.98;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 6px;
+      color: #e5e9f2;
+      font-size: clamp(10px, 0.82vw, 13px);
+      line-height: 1;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(16px, 2vw, 34px);
+      min-width: 0;
+      color: #f3f4fb;
+      font-size: clamp(10px, 0.78vw, 13px);
+      line-height: 1;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      position: relative;
+    }
+
+    .nav-links .active {
+      color: var(--purple-2);
+    }
+
+    .nav-links .active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -29px;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--purple-2);
+      box-shadow: 0 0 13px rgba(204, 99, 255, 0.75);
+    }
+
+    .nav-links i {
+      margin-left: 4px;
+      color: var(--purple-2);
+      font-size: 8px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      margin-left: auto;
+      color: #f2d8ff;
+      background: rgba(157, 57, 242, 0.1);
+      border: 1px solid rgba(204, 99, 255, 0.76);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 21px;
+      height: 2px;
+      display: block;
+      background: currentColor;
+      border-radius: 99px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav.nav-open .menu-toggle span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav.nav-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav.nav-open .menu-toggle span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-contact {
+      height: clamp(38px, 3vw, 46px);
+      min-width: clamp(104px, 8vw, 130px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 clamp(12px, 1.2vw, 18px);
+      border: 1px solid rgba(203, 99, 255, 0.75);
+      border-radius: 5px;
+      color: #f7e6ff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: clamp(430px, 34vw, 560px);
+      padding-block: clamp(24px, 2.4vw, 38px) clamp(16px, 1.4vw, 24px);
+      background:
+        radial-gradient(circle at 70% 48%, rgba(170, 54, 255, 0.27), transparent 29%),
+        radial-gradient(circle at 66% 76%, rgba(148, 58, 255, 0.23), transparent 19%),
+        linear-gradient(180deg, rgba(1, 4, 11, 0), rgba(1, 5, 12, 0.18));
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(204, 99, 255, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142, 64, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(rgba(142, 64, 255, 0.08) 1px, transparent 1px);
+      background-size: 23px 23px, 68px 68px, 68px 68px;
+      mask-image: radial-gradient(circle at 68% 50%, black 0%, transparent 57%);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 6px;
+      width: 56%;
+      height: 220px;
+      opacity: 0.34;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 21px, rgba(152, 80, 255, 0.22) 21px 23px, transparent 23px 42px),
+        linear-gradient(180deg, transparent, rgba(54, 16, 101, 0.46));
+      clip-path: polygon(0 67%, 8% 43%, 16% 61%, 25% 31%, 36% 50%, 47% 20%, 59% 47%, 72% 28%, 84% 54%, 100% 34%, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(330px, 0.41fr) minmax(0, 0.59fr);
+      gap: clamp(18px, 2.8vw, 46px);
+      min-height: inherit;
+      align-items: start;
+      padding-inline: var(--pad);
+    }
+
+    .hero-copy {
+      padding-top: 0;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: clamp(11px, 1.1vw, 18px);
+      margin: 0 0 4px;
+      color: var(--purple-2);
+      font-family: "Roboto", "Inter", Arial, sans-serif;
+      font-size: clamp(41px, 3.35vw, 56px);
+      line-height: 1;
+      font-weight: 700;
+      text-shadow: 0 0 16px rgba(204, 99, 255, 0.3);
+    }
+
+    .eyebrow::after {
+      content: "";
+      width: clamp(36px, 3.5vw, 60px);
+      height: clamp(3px, 0.28vw, 5px);
+      margin-top: 6px;
+      border-radius: 99px;
+      background: var(--purple-2);
+      box-shadow: 0 0 12px rgba(204, 99, 255, 0.76);
+    }
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-family: "Roboto", "Inter", Arial, sans-serif;
+      font-size: clamp(39px, 3.05vw, 52px);
+      line-height: 1.03;
+      font-weight: 700;
+    }
+
+    .hero-lede {
+      margin: clamp(18px, 1.5vw, 24px) 0 0;
+      color: var(--purple-2);
+      font-size: clamp(19px, 1.45vw, 25px);
+      line-height: 1.28;
+      font-weight: 800;
+    }
+
+    .hero-text {
+      max-width: 500px;
+      width: 100%;
+      margin: clamp(15px, 1.3vw, 22px) 0 clamp(24px, 2vw, 34px);
+      color: #f3f5fb;
+      font-size: clamp(15px, 1.05vw, 18px);
+      line-height: 1.55;
+      font-weight: 520;
+    }
+
+    .hero-actions,
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 1.5vw, 22px);
+    }
+
+    .btn {
+      min-height: clamp(44px, 3.4vw, 54px);
+      min-width: clamp(151px, 13vw, 220px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 clamp(18px, 1.6vw, 28px);
+      border: 1px solid rgba(202, 118, 236, 0.72);
+      border-radius: 5px;
+      color: #fff;
+      background: rgba(6, 10, 21, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      font-size: clamp(13px, 0.95vw, 15px);
+      line-height: 1;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      min-width: clamp(166px, 14vw, 245px);
+      border-color: #aa45f2;
+      background: linear-gradient(180deg, #bd4cff, #7c2bd6);
+      box-shadow: 0 11px 26px rgba(132, 43, 220, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-art {
+      position: relative;
+      height: clamp(385px, 31vw, 515px);
+      min-width: 0;
+    }
+
+    .hero-shield {
+      position: absolute;
+      left: 50.5%;
+      top: 51%;
+      width: clamp(338px, 29vw, 505px);
+      transform: translateX(-50%);
+      translate: 0 -50%;
+      isolation: isolate;
+    }
+
+
+    /* ayush */
+    .hero-shield {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: clamp(270px, 23vw, 400px);
+  transform: translateX(-50%);
+  translate: 0 -50%;
+}
+
+.hero {
+  padding-bottom: 0;
+}
+
+.hero-text {
+  margin-bottom: 12px;
+}
+
+.hero {
+  min-height: auto;
+  padding-bottom: 0;
+}
+/* ayush */
+
+    .hero-shield::before {
+      content: "";
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: 1%;
+      height: 90px;
+      background:
+        radial-gradient(ellipse at center, rgba(206, 64, 255, 0.65), transparent 62%);
+      filter: blur(5px);
+      z-index: -1;
+    }
+
+    .hero-shield img {
+      width: 100%;
+      filter:
+        grayscale(0.25)
+        sepia(1)
+        saturate(5)
+        hue-rotate(228deg)
+        brightness(0.88)
+        contrast(1.22)
+        drop-shadow(0 0 22px rgba(185, 77, 255, 0.72))
+        drop-shadow(0 24px 34px rgba(0, 0, 0, 0.65));
+    }
+
+    .signal {
+      position: absolute;
+      display: grid;
+      justify-items: center;
+      gap: clamp(6px, 0.6vw, 9px);
+      min-width: clamp(92px, 7.8vw, 122px);
+      color: #fff;
+      text-align: center;
+      font-size: clamp(12px, 0.82vw, 14px);
+      line-height: 1.16;
+      font-weight: 750;
+    }
+
+    .signal::before {
+      content: "";
+      position: absolute;
+      top: clamp(14px, 1.2vw, 18px);
+      width: clamp(58px, 5.2vw, 88px);
+      border-top: 2px dotted rgba(194, 83, 255, 0.44);
+    }
+
+    .signal.left::before {
+      left: calc(100% - clamp(18px, 1.5vw, 28px));
+    }
+
+    .signal.right::before {
+      right: calc(100% - clamp(18px, 1.5vw, 28px));
+    }
+
+    .signal i {
+      display: block;
+      color: #f0c7ff;
+      font-size: clamp(25px, 2.05vw, 34px);
+      line-height: 1;
+      filter: drop-shadow(0 0 13px rgba(185, 64, 255, 0.56));
+    }
+
+    .signal-1 { left: 9%; top: 6%; }
+    .signal-2 { left: 9%; top: 36%; }
+    .signal-3 { left: 8%; top: 66%; }
+    .signal-4 { right: 8%; top: 6%; }
+    .signal-5 { right: 8%; top: 37%; }
+    .signal-6 { right: 8%; top: 67%; }
+
+    .content {
+      display: grid;
+      gap: clamp(14px, 1.2vw, 22px);
+      padding-bottom: clamp(14px, 1.2vw, 24px);
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr) minmax(0, 1.16fr);
+      gap: clamp(12px, 1.1vw, 18px);
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(107, 49, 218, 0.13), transparent 34%),
+        linear-gradient(180deg, rgba(5, 11, 24, 0.94), rgba(3, 8, 18, 0.98));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .top-panel {
+      min-height: clamp(406px, 29vw, 520px);
+      padding: clamp(24px, 2vw, 34px) clamp(17px, 1.6vw, 28px) clamp(22px, 1.7vw, 30px);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: clamp(13px, 1.1vw, 18px);
+      margin-bottom: clamp(26px, 2vw, 36px);
+      min-height: clamp(40px, 3.6vw, 58px);
+    }
+
+    .icon-badge {
+      width: clamp(40px, 3.6vw, 58px);
+      height: clamp(40px, 3.6vw, 58px);
+      display: grid;
+      place-items: center;
+      flex: 0 0 clamp(40px, 3.6vw, 58px);
+      color: #f8ecff;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #b742ff 0%, #7230dc 100%);
+      box-shadow: 0 0 22px rgba(173, 62, 255, 0.5);
+      font-size: clamp(19px, 1.5vw, 26px);
+    }
+
+    .panel h2 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(20px, 1.55vw, 29px);
+      line-height: 1.08;
+      font-weight: 800;
+    }
+
+    .panel p {
+      margin: 0;
+      color: #eff2f8;
+      font-size: clamp(14px, 1vw, 18px);
+      line-height: 1.75;
+      font-weight: 520;
+    }
+
+    .overview p + p {
+      margin-top: 28px;
+    }
+
+    .top-panel .panel-title {
+      margin-bottom: clamp(24px, 1.8vw, 30px);
+    }
+
+    .accent-copy {
+      color: #df7dff;
+      font-size: clamp(15px, 1.05vw, 19px);
+      line-height: 1.45;
+      font-weight: 850;
+    }
+
+    .feature-list,
+    .ideal-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: clamp(15px, 1.15vw, 22px);
+    }
+
+    .feature-list li {
+      display: grid;
+      grid-template-columns: clamp(20px, 1.45vw, 27px) 1fr;
+      gap: clamp(10px, 0.9vw, 15px);
+      align-items: start;
+      color: #f4f6fc;
+      font-size: clamp(13px, 0.92vw, 17px);
+      line-height: 1.37;
+      font-weight: 570;
+    }
+
+    .feature-list i {
+      color: #c66cff;
+      font-size: clamp(17px, 1.2vw, 21px);
+      line-height: 1.15;
+    }
+
+    .timeline {
+      display: grid;
+      gap: clamp(24px, 1.9vw, 32px);
+      margin-top: 0;
+    }
+
+    .timeline-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: clamp(42px, 3.5vw, 56px) 1fr;
+      gap: clamp(13px, 1.2vw, 19px);
+      align-items: start;
+    }
+
+    .timeline-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: calc(clamp(42px, 3.5vw, 56px) / 2);
+      top: clamp(42px, 3.5vw, 56px);
+      bottom: -26px;
+      border-left: 2px dotted rgba(199, 83, 255, 0.45);
+    }
+
+    .number {
+      width: clamp(42px, 3.5vw, 56px);
+      height: clamp(42px, 3.5vw, 56px);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #b946ff, #722eda);
+      box-shadow: 0 0 18px rgba(181, 62, 255, 0.54);
+      font-size: clamp(18px, 1.4vw, 24px);
+      font-weight: 900;
+    }
+
+    .timeline-step strong {
+      display: block;
+      margin: 0 0 5px;
+      color: #fff;
+      font-size: clamp(14px, 1vw, 18px);
+      line-height: 1.23;
+      font-weight: 850;
+    }
+
+    .timeline-step span span {
+      display: block;
+      color: #d8deeb;
+      font-size: clamp(13px, 0.92vw, 17px);
+      line-height: 1.44;
+      font-weight: 530;
+    }
+
+
+    .timeline-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 42px;
+  height: 32px;
+  border-left: 2px dotted rgba(199, 83, 255, 0.55);
+}
+.number {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg,#b946ff,#722eda);
+  box-shadow: 0 0 18px rgba(181,62,255,.54);
+  font-size: 18px;
+  font-weight: 900;
+  position: relative;
+  z-index: 2;
+}
+
+    .wide-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.07fr);
+      gap: clamp(12px, 1.1vw, 18px);
+    }
+
+    .wide-panel {
+      min-height: clamp(300px, 23vw, 390px);
+      padding: clamp(17px, 1.45vw, 25px) clamp(21px, 1.8vw, 32px);
+    }
+
+    .wide-panel .panel-title {
+      margin-bottom: 18px;
+    }
+
+    .ideal {
+      display: grid;
+      grid-template-columns: minmax(170px, 0.44fr) minmax(220px, 0.56fr);
+      align-items: end;
+      gap: clamp(8px, 1vw, 18px);
+    }
+
+    .ideal-list {
+      display: grid;
+      gap: clamp(19px, 1.5vw, 26px);
+    }
+
+    .ideal-list li {
+      display: grid;
+      grid-template-columns: clamp(25px, 1.8vw, 34px) 1fr;
+      gap: clamp(9px, 0.9vw, 14px);
+      align-items: start;
+      color: #f1f3fb;
+      font-size: clamp(12px, 0.95vw, 17px);
+      line-height: 1.35;
+      font-weight: 570;
+    }
+
+    .ideal-list i {
+      color: #d16eff;
+      font-size: clamp(20px, 1.5vw, 27px);
+      line-height: 1.1;
+    }
+
+    .city-visual {
+      position: relative;
+      min-height: clamp(236px, 20vw, 340px);
+      align-self: stretch;
+      display: grid;
+      place-items: end center;
+    }
+
+    .city-bars {
+      position: absolute;
+      left: clamp(14px, 1.4vw, 24px);
+      right: clamp(16px, 1.5vw, 26px);
+      bottom: clamp(43px, 3.4vw, 62px);
+      height: clamp(180px, 15vw, 260px);
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: clamp(13px, 1.1vw, 19px);
+      opacity: 0.9;
+    }
+
+    .city-bars span {
+      width: clamp(27px, 2.1vw, 40px);
+      border: 1px solid rgba(185, 90, 255, 0.28);
+      background:
+        repeating-linear-gradient(180deg, rgba(214, 103, 255, 0.72) 0 3px, transparent 3px 13px),
+        linear-gradient(180deg, rgba(100, 31, 195, 0.95), rgba(21, 8, 49, 0.86));
+      box-shadow: 0 0 20px rgba(161, 62, 255, 0.32);
+    }
+
+
+    
+
+    .city-bars span:nth-child(1) { height: 45%; }
+    .city-bars span:nth-child(2) { height: 70%; }
+    .city-bars span:nth-child(3) { height: 94%; }
+    .city-bars span:nth-child(4) { height: 58%; }
+    .city-bars span:nth-child(5) { height: 77%; }
+
+    .city-visual img {
+      position: relative;
+      z-index: 2;
+      width: clamp(196px, 16vw, 285px);
+      margin-bottom: clamp(6px, 0.7vw, 12px);
+      filter:
+        grayscale(0.25)
+        sepia(1)
+        saturate(5)
+        hue-rotate(228deg)
+        brightness(0.88)
+        contrast(1.2)
+        drop-shadow(0 0 23px rgba(194, 83, 255, 0.72));
+    }
+
+    .city-visual::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 0;
+      height: 75px;
+      background: radial-gradient(ellipse at center, rgba(203, 69, 255, 0.62), transparent 68%);
+      filter: blur(3px);
+    }
+
+    .advantage-copy {
+      margin-top: 2px;
+      color: #eef2fa;
+      font-size: clamp(15px, 1.15vw, 22px);
+      line-height: 1.35;
+      font-weight: 560;
+    }
+
+    .advantage-copy strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--purple-2);
+      font-size: clamp(31px, 2.8vw, 50px);
+      line-height: 1.05;
+      font-weight: 900;
+      text-shadow: 0 0 18px rgba(207, 86, 255, 0.55);
+    }
+
+    .shift {
+      display: grid;
+      grid-template-columns: 1fr clamp(100px, 8vw, 145px) 1fr;
+      align-items: center;
+      gap: clamp(18px, 1.6vw, 26px);
+      width: min(100%, clamp(315px, 38vw, 610px));
+      margin: clamp(23px, 2vw, 36px) auto 0;
+      text-align: center;
+    }
+
+    .mini-shield {
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+      color: #aeb5c4;
+      font-size: clamp(12px, 0.9vw, 15px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .mini-shield img {
+      width: clamp(78px, 7vw, 122px);
+      filter:
+        grayscale(1)
+        brightness(0.68)
+        contrast(1.22)
+        drop-shadow(0 0 10px rgba(181, 99, 255, 0.18));
+      opacity: 1;
+    }
+
+    .mini-shield.dominance {
+      color: #e58fff;
+    }
+
+    .mini-shield.dominance img {
+      filter:
+        grayscale(0.25)
+        sepia(1)
+        saturate(5)
+        hue-rotate(228deg)
+        brightness(0.9)
+        contrast(1.2)
+        drop-shadow(0 0 18px rgba(196, 83, 255, 0.72));
+      opacity: 1;
+    }
+
+    .arrow {
+      height: clamp(31px, 2.5vw, 42px);
+      background: linear-gradient(90deg, rgba(204, 99, 255, 0.03), #cf65ff);
+      clip-path: polygon(0 37%, 68% 37%, 68% 0, 100% 50%, 68% 100%, 68% 63%, 0 63%);
+      box-shadow: 0 0 22px rgba(204, 99, 255, 0.5);
+    }
+
+    .comparison {
+      min-height: clamp(264px, 19vw, 345px);
+      padding: clamp(14px, 1.3vw, 23px) clamp(16px, 1.5vw, 28px) clamp(9px, 1.2vw, 22px);
+    }
+
+    .comparison-title {
+      display: flex;
+      align-items: center;
+      gap: clamp(13px, 1.1vw, 18px);
+      margin-bottom: clamp(14px, 1.3vw, 22px);
+    }
+
+    .comparison-title i {
+      color: #d572ff;
+      font-size: clamp(31px, 2.2vw, 39px);
+    }
+
+    .comparison-title h2 {
+      font-size: clamp(20px, 1.55vw, 29px);
+      font-weight: 800;
+    }
+
+    .table-frame {
+      overflow: hidden;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      color: #f5f7fd;
+      background: rgba(3, 8, 18, 0.54);
+      font-size: clamp(13px, 0.95vw, 17px);
+      line-height: 1.2;
+    }
+
+    th,
+    td {
+      height: clamp(33px, 2.35vw, 45px);
+      padding: 0 clamp(10px, 1vw, 18px);
+      border: 0;
+      border-right: 1px solid rgba(210, 225, 246, 0.16);
+      border-bottom: 1px solid rgba(210, 225, 246, 0.16);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    th {
+      height: clamp(42px, 3vw, 56px);
+      border-top: 1px solid rgba(210, 225, 246, 0.16);
+      color: #fff;
+      font-size: clamp(15px, 1.05vw, 20px);
+      font-weight: 850;
+    }
+
+    th:first-child,
+    td:first-child {
+      width: 21%;
+      border-left: 1px solid rgba(210, 225, 246, 0.16);
+      text-align: left;
+      padding-left: 12px;
+    }
+
+    th i {
+      margin-right: 8px;
+      font-size: clamp(22px, 1.6vw, 28px);
+      vertical-align: middle;
+    }
+
+    .shield-head {
+      color: #58b5ff;
+    }
+
+    .fortress-head {
+      color: #f3b32d;
+    }
+
+    .vanguard-col {
+      color: #dc7cff;
+      background: rgba(62, 20, 119, 0.34);
+      border-left: 2px solid rgba(202, 99, 255, 0.82);
+      border-right: 2px solid rgba(202, 99, 255, 0.82);
+    }
+
+    th.vanguard-col {
+      border-top: 2px solid rgba(202, 99, 255, 0.8);
+      border-left: 2px solid rgba(202, 99, 255, 0.8);
+      border-right: 2px solid rgba(202, 99, 255, 0.8);
+      border-radius: 6px 6px 0 0;
+    }
+
+    tr:last-child td.vanguard-col {
+      border-bottom: 2px solid rgba(202, 99, 255, 0.8);
+      border-radius: 0 0 6px 6px;
+    }
+
+    .check {
+      color: #a847ff;
+      font-size: clamp(18px, 1.35vw, 24px);
+    }
+
+    .shield-check {
+      color: var(--blue);
+    }
+
+    .fortress-check {
+      color: #f3b32d;
+    }
+
+    .dash {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 900;
+    }
+
+    .cta {
+      position: relative;
+      min-height: clamp(128px, 10vw, 178px);
+      display: grid;
+      grid-template-columns: clamp(154px, 13vw, 225px) 1fr;
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: clamp(27px, 3vw, 52px);
+      row-gap: clamp(13px, 1vw, 20px);
+      padding: clamp(14px, 1.5vw, 25px) clamp(24px, 3vw, 52px) clamp(14px, 1.5vw, 25px) clamp(25px, 2.5vw, 44px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 62%, rgba(180, 61, 255, 0.28), transparent 22%),
+        radial-gradient(circle at 84% 45%, rgba(153, 61, 255, 0.22), transparent 20%),
+        linear-gradient(90deg, rgba(5, 11, 24, 0.98), rgba(3, 8, 18, 0.98));
+    }
+
+    .cta::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      right: 27px;
+      width: clamp(230px, 24vw, 390px);
+      height: clamp(68px, 6.5vw, 110px);
+      opacity: 0.45;
+      background:
+        radial-gradient(circle, rgba(204, 99, 255, 0.62) 1.3px, transparent 1.3px);
+      background-size: 12px 12px;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 72%);
+      pointer-events: none;
+    }
+
+    .cta img {
+      grid-row: 1 / 3;
+      width: clamp(138px, 12vw, 210px);
+      filter:
+        grayscale(0.25)
+        sepia(1)
+        saturate(5)
+        hue-rotate(228deg)
+        brightness(0.9)
+        contrast(1.2)
+        drop-shadow(0 0 23px rgba(194, 83, 255, 0.7));
+    }
+
+    .cta h2 {
+      position: relative;
+      z-index: 2;
+      grid-column: 2;
+      margin: 0;
+      color: #fff;
+      font-size: clamp(30px, 3vw, 52px);
+      line-height: 1.04;
+      font-weight: 800;
+    }
+
+    .cta-actions {
+      position: relative;
+      z-index: 2;
+      grid-column: 2;
+      justify-content: flex-start;
+    }
+
+    .cta .btn {
+      min-height: clamp(38px, 3vw, 52px);
+      min-width: clamp(164px, 13vw, 235px);
+      font-size: clamp(12px, 0.95vw, 15px);
+    }
+
+    @media (max-width: 1080px) {
+      .site-header {
+        height: auto;
+      }
+
+      .nav {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        height: auto;
+        align-items: center;
+        justify-content: start;
+        column-gap: 14px;
+        row-gap: 0;
+        padding-block: 14px;
+      }
+
+      .brand {
+        grid-column: 2;
+        min-width: 0;
+      }
+
+      .menu-toggle {
+        grid-column: 1;
+        grid-row: 1;
+        display: inline-flex;
+        margin-left: 0;
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        width: 100%;
+        max-height: 0;
+        height: auto;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+        border-top: 0 solid transparent;
+        transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+      }
+
+      .nav.nav-open .nav-links {
+        max-height: 620px;
+        padding: 12px 0 4px;
+        opacity: 1;
+        visibility: visible;
+        border-top: 1px solid rgba(213, 114, 255, 0.24);
+      }
+
+      .nav-links .active::after {
+        display: none;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 12px 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-links .nav-contact {
+        width: 100%;
+        margin-top: 8px;
+        border-bottom: 1px solid rgba(203, 99, 255, 0.75);
+      }
+    }
+
+    @media (max-width: 860px) {
+      :root {
+        --pad: 16px;
+      }
+
+      .site-header {
+        height: auto;
+      }
+
+      .nav {
+        height: auto;
+        gap: 15px;
+        padding: 14px 16px;
+      }
+
+      .nav-links {
+        flex-wrap: nowrap;
+      }
+
+      .nav-links .active::after {
+        display: none;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 0;
+        padding: 30px 0 22px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        height: auto;
+        padding-inline: var(--pad);
+      }
+
+      .hero-art {
+        height: 360px;
+        max-width: 550px;
+        width: 100%;
+        margin-inline: auto;
+      }
+
+      .top-grid,
+      .wide-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .top-panel,
+      .wide-panel {
+        min-height: auto;
+      }
+
+      .ideal {
+        grid-template-columns: 1fr;
+      }
+
+      .cta {
+        grid-template-columns: 120px 1fr;
+      }
+
+      .cta-actions {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .brand-name {
+        font-size: clamp(20px, 6vw, 24px);
+      }
+
+      .brand {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand-mark img {
+        width: 42px;
+        height: auto;
+      }
+
+      .brand small {
+        font-size: 9px;
+        white-space: normal;
+        line-height: 1.2;
+      }
+
+      .hero-copy {
+        padding-top: 0;
+      }
+
+      .eyebrow,
+      h1 {
+        font-size: 38px;
+      }
+
+      .hero-lede {
+        font-size: 21px;
+      }
+
+      .hero-text {
+        width: auto;
+        font-size: 15px;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .btn,
+      .btn-primary {
+        width: 100%;
+      }
+
+      .hero-art {
+        height: auto;
+        display: grid;
+        gap: 12px;
+      }
+
+      .hero-shield {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: min(320px, 100%);
+        margin: 0 auto;
+        transform: none;
+        translate: none;
+      }
+
+      .signal {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .signal::before {
+        display: none;
+      }
+
+      .signal i {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        font-size: 19px;
+      }
+
+      .shift {
+        width: 100%;
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        width: 82px;
+        margin: 0 auto;
+        transform: rotate(90deg);
+      }
+
+      .comparison {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 720px;
+      }
+
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .cta img,
+      .cta h2,
+      .cta-actions {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="nav">
+        <a class='brand' href='/'>
+          <span class="brand-mark"><img src="second_small_logo.png" alt="SentraGuarda logo"></span>
+          <span>
+            <span class="brand-name">Sentra<span>Guarda</span></span>
+            <small>Securing Today, Preparing for Tomorrow.</small>
+          </span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-controls="secondary-navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav-links" id="secondary-navigation" aria-label="Primary navigation">
+          <a href='/'>Home</a>
+          <a class="active" href="#">Services</a>
+          <a href="#">Industries</a>
+          <a href="#">Knowledge Base <i class="fa-solid fa-chevron-down"></i></a>
+          <a href="#">Operational Documentation</a>
+          <a href="#">Why SentraGuarda</a>
+          <a class="nav-contact" href="#consultation">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Vanguard</p>
+            <h1>Advanced XDR</h1>
+            <p class="hero-lede">Proactive defense.<br>Intelligence-driven security.</p>
+            <p class="hero-text">Detect, investigate, and respond across your entire environment with advanced XDR and threat intelligence.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#consultation">Get Consultation <i class="fa-solid fa-arrow-right"></i></a>
+              <a class="btn" href="#comparison">Compare Plans <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="hero-art" aria-label="Vanguard security capabilities">
+            <div class="signal signal-1 left"><i class="fa-solid fa-crosshairs"></i><span>Proactive<br>Threat Hunting</span></div>
+            <div class="signal signal-2 left"><i class="fa-solid fa-brain"></i><span>Threat<br>Intelligence</span></div>
+            <div class="signal signal-3 left"><i class="fa-regular fa-cloud"></i><span>Cloud &amp; Network<br>Visibility</span></div>
+            <div class="hero-shield"><img src="dm.png" alt="Purple SentraGuarda Vanguard shield"></div>
+            <div class="signal signal-4 right"><i class="fa-solid fa-magnifying-glass"></i><span>Detect</span></div>
+            <div class="signal signal-5 right"><i class="fa-solid fa-shield-halved"></i><span>Investigate</span></div>
+            <div class="signal signal-6 right"><i class="fa-solid fa-bolt"></i><span>Respond</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap content">
+        <section class="top-grid">
+          <article class="panel top-panel overview">
+            <div class="panel-title">
+              <span class="icon-badge"><i class="fa-regular fa-file-lines"></i></span>
+              <h2>Overview</h2>
+            </div>
+            <p>Vanguard is SentraGuarda's most advanced security offering, combining XDR, threat intelligence, and proactive threat hunting.</p>
+            <p>It delivers end-to-end visibility across endpoints, networks, and systems, enabling organizations to detect and stop sophisticated threats before they escalate.</p>
+          </article>
+
+          <article class="panel top-panel deliver">
+            <div class="panel-title">
+              <span class="icon-badge"><i class="fa-regular fa-gem"></i></span>
+              <h2>What Vanguard Delivers</h2>
+            </div>
+            <div class="accent-copy">Everything in Fortress, plus:</div>
+            <ul class="feature-list">
+              <li><i class="fa-regular fa-circle-check"></i><span>Full XDR (Extended Detection &amp; Response)</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Threat Hunting (Proactive)</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Threat Intelligence Integration</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Cross-Platform Correlation (Endpoint, Network, Cloud)</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Automated Response Capabilities</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Executive-Level Reporting</span></li>
+              <li><i class="fa-regular fa-circle-check"></i><span>Custom Detection Engineering</span></li>
+            </ul>
+          </article>
+
+          <article class="panel top-panel">
+            <div class="panel-title">
+              <span class="icon-badge"><i class="fa-solid fa-gear"></i></span>
+              <h2>How It Works</h2>
+            </div>
+            <div class="timeline">
+              <div class="timeline-step">
+                <span class="number">1</span>
+                <span><strong>Unified Visibility Platform</strong><span>All security signals integrated.</span></span>
+              </div>
+              <div class="timeline-step">
+                <span class="number">2</span>
+                <span><strong>Intelligence-Led Detection</strong><span>Threat intelligence enhances detection accuracy.</span></span>
+              </div>
+              <div class="timeline-step">
+                <span class="number">3</span>
+                <span><strong>Proactive Threat Hunting</strong><span>Hidden threats are actively searched and neutralized.</span></span>
+              </div>
+              <div class="timeline-step">
+                <span class="number">4</span>
+                <span><strong>Automated &amp; Rapid Response</strong><span>Immediate containment of high-risk threats.</span></span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="wide-grid">
+          <article class="panel wide-panel ideal">
+            <div>
+              <div class="panel-title">
+                <span class="icon-badge"><i class="fa-solid fa-user-group"></i></span>
+                <h2>Ideal For</h2>
+              </div>
+              <ul class="ideal-list">
+                <li><i class="fa-regular fa-user"></i><span>Enterprises and large organizations</span></li>
+                <li><i class="fa-solid fa-briefcase-medical"></i><span>High-risk industries (finance, healthcare, utilities)</span></li>
+                <li><i class="fa-solid fa-chess-knight"></i><span>Organizations with mature security programs</span></li>
+                <li><i class="fa-solid fa-shield-heart"></i><span>Businesses requiring proactive defense</span></li>
+              </ul>
+            </div>
+            <div class="city-visual" aria-hidden="true">
+              <div class="city-bars"><span></span><span></span><span></span><span></span><span></span></div>
+              <img src="dm.png" alt="">
+            </div>
+          </article>
+
+          <article class="panel wide-panel">
+            <div class="panel-title">
+              <span class="icon-badge"><i class="fa-regular fa-star"></i></span>
+              <h2>Key Advantage</h2>
+            </div>
+            <div class="advantage-copy">
+              Vanguard shifts security from
+              <strong>defense &rarr; dominance.</strong>
+            </div>
+            <div class="shift">
+              <div class="mini-shield">
+                <img src="dm.png" alt="">
+                <span>DEFENSE</span>
+              </div>
+              <div class="arrow" aria-hidden="true"></div>
+              <div class="mini-shield dominance">
+                <img src="dm.png" alt="">
+                <span>DOMINANCE</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel comparison" id="comparison">
+          <div class="comparison-title">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <h2>Comparison of Shield, Fortress and Vanguard</h2>
+          </div>
+          <div class="table-frame">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th class="shield-head"><i class="fa-solid fa-shield-halved"></i>Shield</th>
+                  <th class="fortress-head"><i class="fa-solid fa-chess-rook"></i>Fortress</th>
+                  <th class="vanguard-col"><i class="fa-solid fa-screwdriver-wrench"></i>Vanguard</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>24/7 Monitoring</td>
+                  <td><i class="fa-solid fa-circle-check check shield-check"></i></td>
+                  <td><i class="fa-solid fa-circle-check check fortress-check"></i></td>
+                  <td class="vanguard-col"><i class="fa-solid fa-circle-check check"></i></td>
+                </tr>
+                <tr>
+                  <td>Advanced Detection</td>
+                  <td><span class="dash">-</span></td>
+                  <td><i class="fa-solid fa-circle-check check fortress-check"></i></td>
+                  <td class="vanguard-col"><i class="fa-solid fa-circle-check check"></i></td>
+                </tr>
+                <tr>
+                  <td>Behavioral Analysis</td>
+                  <td><span class="dash">-</span></td>
+                  <td><i class="fa-solid fa-circle-check check fortress-check"></i></td>
+                  <td class="vanguard-col"><i class="fa-solid fa-circle-check check"></i></td>
+                </tr>
+                <tr>
+                  <td>Threat Hunting</td>
+                  <td><span class="dash">-</span></td>
+                  <td><span class="dash">-</span></td>
+                  <td class="vanguard-col"><i class="fa-solid fa-circle-check check"></i></td>
+                </tr>
+                <tr>
+                  <td>XDR</td>
+                  <td><span class="dash">-</span></td>
+                  <td><span class="dash">-</span></td>
+                  <td class="vanguard-col"><i class="fa-solid fa-circle-check check"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="cta" id="consultation">
+          <img src="dm.png" alt="SentraGuarda shield">
+          <h2>Stay ahead of threats.</h2>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="#">Get Consultation <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="btn" href="#comparison">Compare Plans <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const toggle = document.querySelector(".menu-toggle");
+      if (!toggle) return;
+
+      const nav = toggle.closest(".nav-inner, .nav");
+      const menu = document.getElementById(toggle.getAttribute("aria-controls"));
+      if (!nav || !menu) return;
+
+      const closeMenu = () => {
+        nav.classList.remove("nav-open");
+        toggle.setAttribute("aria-expanded", "false");
+      };
+
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("nav-open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (nav.classList.contains("nav-open") && !nav.contains(event.target)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenu();
+      });
+
+      window.addEventListener("resize", () => {
+        if (getComputedStyle(toggle).display === "none") closeMenu();
+      });
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</body>
+</html>

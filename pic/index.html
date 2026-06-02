@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentraGuarda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --ink: #f7fbff;
+      --muted: #c8d2dd;
+      --soft: #9daab8;
+      --black: #020711;
+      --navy: #04101c;
+      --navy-2: #061625;
+      --navy-3: #071b2e;
+      --line: rgba(255, 255, 255, 0.15);
+      --gold: #f0a51a;
+      --gold-2: #ffd46f;
+      --gold-3: #b56f0c;
+      --cyan: #21d7c6;
+      --blue: #4e95ef;
+      --purple: #e383ff;
+      --paper: #f5f6f8;
+      --paper-line: #dfe5ec;
+      --text: #07101c;
+      --radius: 8px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --page-pad: clamp(18px, 2.2vw, 34px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Roboto", Arial, sans-serif;
+      color: var(--text);
+      background: var(--paper);
+      letter-spacing: 0;
+      min-width: 320px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .topbar {
+      background: var(--black);
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding-inline: var(--page-pad);
+    }
+
+    .topbar .wrap {
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 13px;
+      font-size: clamp(14px, 1.2vw, 18px);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .topbar i {
+  color: var(--gold);
+  font-size: clamp(16px, 1.5vw, 24px);
+  transform: rotate(-15deg);
+}
+
+   .topbar strong {
+  color: var(--gold);
+  margin-left: 4px;
+  font-weight: 700;
+}
+
+    .navbar {
+      background: #030914;
+      color: var(--ink);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 3vw, 46px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      min-width: clamp(238px, 22vw, 330px);
+      gap: 9px;
+    }
+
+    .brand-mark {
+      width: 56px;
+      height: 52px;
+      flex: 0 0 56px;
+      position: relative;
+      overflow: visible;
+    }
+
+    .brand-mark img {
+      width: 56px;
+      height: auto;
+      object-fit: contain;
+      max-width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 0 8px rgba(240, 165, 26, 0.16));
+    }
+
+    .brand-name {
+      font-size: clamp(25px, 2.1vw, 32px);
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 6px;
+      color: #edf3fb;
+      font-size: clamp(10px, 0.82vw, 13px);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(18px, 2.1vw, 36px);
+      flex: 1;
+      min-width: 0;
+      font-size: clamp(10px, 0.78vw, 13px);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .nav-links i {
+      margin-left: 7px;
+      color: var(--gold);
+      font-size: 10px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      margin-left: auto;
+      color: var(--gold-2);
+      background: rgba(240, 165, 26, 0.08);
+      border: 1px solid rgba(240, 165, 26, 0.72);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 21px;
+      height: 2px;
+      display: block;
+      background: currentColor;
+      border-radius: 99px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-inner.nav-open .menu-toggle span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-inner.nav-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-inner.nav-open .menu-toggle span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-cta,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .nav-cta {
+      min-height: 44px;
+      padding: 0 clamp(14px, 1.25vw, 18px);
+      color: var(--gold-2);
+      font-size: 13px;
+      border: 1px solid var(--gold);
+      box-shadow: inset 0 0 0 1px rgba(255, 214, 111, 0.08);
+    }
+
+    .hero {
+      position: relative;
+      color: var(--ink);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 71% 52%, rgba(19, 131, 255, 0.34), rgba(19, 131, 255, 0.05) 25%, transparent 52%),
+        radial-gradient(circle at 78% 31%, rgba(240, 165, 26, 0.14), transparent 27%),
+        linear-gradient(95deg, #020710 0%, #04111e 42%, #07182a 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.38;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44, 169, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(rgba(44, 169, 255, 0.11) 1px, transparent 1px);
+      background-size: 22px 22px, 66px 66px, 66px 66px;
+      mask-image: radial-gradient(circle at 68% 50%, black 0%, transparent 58%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      min-height: 405px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.62fr) minmax(145px, 0.22fr);
+      align-items: center;
+      gap: clamp(18px, 2vw, 30px);
+      padding-block: 12px 19px;
+    }
+
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      z-index: 2;
+      padding-top: 4px;
+      min-width: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: none;
+      color: #fff;
+      font-size: clamp(44px, 4vw, 64px);
+      line-height: 1.16;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .headline-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    h1 .accent {
+      color: var(--gold);
+    }
+
+    .hero-copy p {
+      max-width: 650px;
+      margin: 25px 0 27px;
+      color: #f0f5fb;
+      font-size: clamp(16px, 1.25vw, 21px);
+      line-height: 1.62;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      min-width: clamp(215px, 15vw, 260px);
+      min-height: clamp(42px, 3.5vw, 54px);
+      padding: 0 clamp(18px, 1.6vw, 26px);
+      border: 1px solid var(--gold);
+      font-size: clamp(13px, 0.95vw, 15px);
+    }
+
+    .btn-primary {
+      color: #111722;
+      background: linear-gradient(180deg, var(--gold-2), var(--gold));
+      border-color: #f7bc44;
+      box-shadow: 0 6px 18px rgba(240, 165, 26, 0.35);
+    }
+
+    .btn-ghost {
+      min-width: clamp(176px, 13vw, 230px);
+      color: var(--ink);
+      background: rgba(2, 7, 17, 0.26);
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      max-width: min(760px, 100%);
+    }
+
+    .proof-item {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 9px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .proof-item i {
+      color: var(--gold);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .proof-item strong {
+      display: block;
+      color: #fff;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .proof-item small {
+      display: block;
+      margin-top: 4px;
+      color: #d7e0eb;
+      font-size: 9px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .hero-visual {
+      grid-column: 2;
+      grid-row: 1;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .hero-visual img {
+      width: clamp(320px, 27vw, 500px);
+      filter:
+        drop-shadow(0 0 28px rgba(33, 215, 198, 0.3))
+        drop-shadow(0 28px 35px rgba(0, 0, 0, 0.52));
+    }
+
+    .hero-steps {
+      grid-column: 3;
+      grid-row: 1;
+      display: grid;
+      gap: clamp(17px, 2vw, 28px);
+      align-self: center;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 11px;
+      align-items: center;
+    }
+
+    .step .circle {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      border: 2px solid rgba(240, 165, 26, 0.78);
+      border-radius: 50%;
+      font-size: 19px;
+      box-shadow: inset 0 0 20px rgba(240, 165, 26, 0.1);
+    }
+
+    .step strong {
+      display: block;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .step span {
+      display: block;
+      color: #dce5ef;
+      font-size: 11px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .light-section {
+      background: var(--paper);
+    }
+
+    .section-head {
+      text-align: center;
+      padding: 17px 0 11px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 25px;
+      color: #07101c;
+      font-size: 25px;
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .section-head h2::before,
+    .section-head h2::after {
+      content: "";
+      width: 94px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .section-head h2::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: #1d2a38;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    #knowledge .section-head {
+      padding: 12px 0 8px;
+    }
+
+    #knowledge .section-head h2 {
+      font-size: 22px;
+    }
+
+    #knowledge .section-head p {
+      margin-top: 6px;
+      font-size: 11px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: clamp(8px, 0.75vw, 12px);
+      padding: 0 0 14px;
+    }
+
+    .service-card {
+      min-height: clamp(230px, 20vw, 310px);
+      display: flex;
+      flex-direction: column;
+      padding: clamp(14px, 1.25vw, 20px) clamp(14px, 1.15vw, 18px) 22px;
+      color: #f8fbff;
+      background: linear-gradient(180deg, #061322 0%, #03101d 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 18px rgba(4, 12, 24, 0.14);
+    }
+
+    .card-title {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 8px;
+      align-items: start;
+      min-height: 66px;
+    }
+
+    .card-title i {
+      color: var(--card-color);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .card-title h3 {
+      margin: 0;
+      color: var(--card-color);
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .card-title p {
+      margin: 5px 0 0;
+      color: #dbe3ec;
+      font-size: 9px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .service-list {
+      display: grid;
+      gap: 13px;
+      margin: 14px 0 12px;
+    }
+
+    .service-list a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 9px;
+      align-items: center;
+      margin: -5px;
+      padding: 5px;
+      border-radius: 6px;
+      color: inherit;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .service-list a:hover,
+    .service-list a:focus-visible {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateX(2px);
+      outline: none;
+    }
+
+    .service-list i {
+      color: var(--card-color);
+      font-size: 20px;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .service-list strong {
+      display: block;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.28;
+      font-weight: 600;
+    }
+
+    .service-list small {
+      display: block;
+      margin-top: 4px;
+      color: #c9d5e1;
+      font-size: 10px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .learn {
+      margin-top: auto;
+      padding-top: 14px;
+      margin-left: 33px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--card-color);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      width: fit-content;
+    }
+
+    .learn i {
+      font-size: 17px;
+      line-height: 1;
+      transform: translateY(1px);
+    }
+
+    .mid-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+      gap: clamp(10px, 1vw, 16px);
+      padding: 0 0 14px;
+    }
+
+
+    .services {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  padding: 0 0 14px;
+}
+    .dark-panel {
+      min-height: 254px;
+      color: var(--ink);
+      background: linear-gradient(180deg, #061422, #03101d);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .dark-panel h2 {
+      margin: 0 0 8px;
+      color: #fff;
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .dark-panel > p {
+      margin: 0 0 19px;
+      color: #d6e0ea;
+      font-size: 11px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .industry {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 9px;
+      align-items: center;
+      padding: 9px 12px;
+      color: #07101c;
+      background: #f8fafc;
+      border: 1px solid rgba(7, 16, 28, 0.12);
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .industry i {
+      color: #07101c;
+      font-size: 23px;
+      text-align: center;
+    }
+
+    .view-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 17px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .why-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 0.8fr);
+      gap: clamp(20px, 2vw, 34px);
+      align-items: stretch;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 15px;
+    }
+
+    .check-list div {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 8px;
+      align-items: start;
+      color: #ecf3fb;
+      font-size: 10px;
+      line-height: 1.42;
+      font-weight: 600;
+    }
+
+    .check-list i {
+      color: var(--gold);
+      font-size: 16px;
+      margin-top: 1px;
+    }
+
+    .ops-photo {
+      min-height: 208px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background-image: url("desing.jfif");
+      background-repeat: no-repeat;
+      background-size: 379% 738%;
+      background-position: 95.5% 69%;
+      position: relative;
+    }
+
+    .ops-photo::before {
+      content: "";
+      display: none;
+      position: absolute;
+      inset: 22px 32px 34px 32px;
+      background:
+        linear-gradient(90deg, rgba(45, 167, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(45, 167, 255, 0.1) 1px, transparent 1px);
+      background-size: 38px 30px;
+      transform: perspective(520px) rotateX(56deg) rotateZ(-2deg);
+      transform-origin: bottom center;
+      border-top: 4px solid rgba(45, 167, 255, 0.35);
+    }
+
+    .ops-photo::after {
+      content: "";
+      display: none;
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 18%;
+      height: 44%;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 3.5%, rgba(78, 149, 239, 0.95) 3.5% 4.6%, transparent 4.6% 10%),
+        linear-gradient(180deg, rgba(30, 116, 226, 0.5), rgba(0, 0, 0, 0));
+      border: 1px solid rgba(87, 177, 255, 0.25);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      padding: 0 0 8px;
+    }
+
+    .resource {
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 13px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--paper-line);
+      border-radius: 7px;
+    }
+
+    .resource i {
+      color: #07101c;
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .resource strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .resource span {
+      display: block;
+      margin-top: 4px;
+      color: #1c2837;
+      font-size: 9px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .resources-link {
+      margin: 0 0 8px 0;
+    }
+
+    .bottom-cta {
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 66% 56%, rgba(240, 165, 26, 0.18), transparent 28%),
+        linear-gradient(90deg, #061422, #030b15 67%, #061422);
+      border-radius: var(--radius) var(--radius) 0 0;
+      overflow: hidden;
+    }
+
+    .cta-inner {
+      min-height: 78px;
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 17px;
+      align-items: center;
+      padding: 12px 22px;
+    }
+
+    .cta-badge {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cta-badge img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+    }
+
+    .cta-inner h2 {
+      margin: 0 0 5px;
+      color: #fff;
+      font-size: 23px;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    .cta-inner p {
+      margin: 0;
+      color: #edf5fd;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    footer {
+      color: var(--ink);
+      background: #03101c;
+      border-top: 2px solid var(--gold-3);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.38fr 1fr 1fr 1.05fr 1.1fr;
+      gap: clamp(26px, 3.2vw, 56px);
+      padding-block: 24px 16px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand .brand-mark {
+      width: 48px;
+      height: 38px;
+      flex-basis: 48px;
+    }
+
+    .footer-brand .brand-mark img {
+      width: 48px;
+      height: auto;
+    }
+
+    .footer-brand .brand-name {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .footer-brand small {
+      display: block;
+      margin-top: 5px;
+      color: #f4f8fd;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .footer-about p {
+      margin: 0 0 16px;
+      color: #e3ebf4;
+      font-size: 11px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 11px;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .copyright {
+      color: #c6d1dd;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .footer-col h4 {
+      margin: 7px 0 13px;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .footer-col a,
+    .contact-row {
+      display: block;
+      margin: 0 0 9px;
+      color: #e0e8f1;
+      font-size: 11px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .footer-col a:hover,
+    .footer-col a:focus-visible {
+      color: #fff;
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 3px;
+      outline: none;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .contact-row i {
+      color: var(--gold);
+      font-size: 14px;
+      text-align: center;
+    }
+.footer-contact .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  width: 140px;
+  min-height: 36px;
+  margin-top: 8px;
+  padding: 0 8px;
+
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.8);
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+    .policy {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 26px;
+      margin-top: 12px;
+      color: #c6d1dd;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1180px) {
+      .nav-inner {
+        gap: 18px;
+      }
+
+      .brand {
+        min-width: 230px;
+      }
+
+      .nav-links {
+        gap: 14px;
+        font-size: 10px;
+      }
+
+      .nav-cta {
+        min-height: 40px;
+        padding-inline: 13px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .nav-inner {
+        position: relative;
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        align-items: center;
+        justify-content: start;
+        column-gap: 14px;
+        row-gap: 0;
+        padding-block: 12px;
+      }
+
+      .brand {
+        grid-column: 2;
+        min-width: 0;
+      }
+
+      .menu-toggle {
+        grid-column: 1;
+        grid-row: 1;
+        display: inline-flex;
+        margin-left: 0;
+      }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+        border-top: 0 solid transparent;
+        font-size: 11px;
+        transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+      }
+
+      .nav-inner.nav-open .nav-links {
+        max-height: 620px;
+        padding: 12px 0 4px;
+        opacity: 1;
+        visibility: visible;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 12px 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-links .nav-cta {
+        margin-top: 8px;
+        border-bottom: 1px solid var(--gold);
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.78fr);
+        min-height: auto;
+        padding-block: 28px 24px;
+      }
+
+      .hero-copy {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .hero-visual {
+        grid-column: 2;
+        grid-row: auto;
+      }
+
+      .hero-steps {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .services {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .mid-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-panel {
+        grid-template-columns: 1fr 300px;
+      }
+
+      .knowledge-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .wrap {
+        width: 100%;
+        padding-inline: 14px;
+      }
+
+      .topbar .wrap {
+        min-height: 44px;
+        justify-content: flex-end;
+        gap: 9px;
+        font-size: 12px;
+      }
+
+      .topbar i {
+        font-size: 22px;
+      }
+
+      .hero-grid {
+        min-height: 0;
+        grid-template-columns: 1fr;
+        padding-block: 34px 26px;
+      }
+
+      .hero-copy,
+      .hero-visual,
+      .hero-steps {
+        grid-column: 1;
+      }
+
+      h1 {
+        font-size: clamp(38px, 8vw, 54px);
+      }
+
+      .hero-copy p {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        margin-bottom: 28px;
+      }
+
+      .hero-proof,
+      .hero-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .hero-visual img {
+        width: min(360px, 100%);
+      }
+
+      .section-head h2 {
+        gap: 14px;
+        font-size: 23px;
+      }
+
+      .section-head h2::before,
+      .section-head h2::after {
+        width: 44px;
+      }
+
+      .services,
+      .knowledge-grid,
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mid-grid,
+      .why-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: auto;
+      }
+
+      .ops-photo {
+        min-height: 230px;
+        background-image:
+          linear-gradient(rgba(2, 7, 17, 0.2), rgba(2, 7, 17, 0.1)),
+          radial-gradient(circle at 26% 37%, rgba(23, 120, 255, 0.5), transparent 24%),
+          linear-gradient(135deg, #051120, #092744 48%, #030912);
+        background-size: auto;
+        background-position: center;
+      }
+
+      .industry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-inner {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .cta-inner .btn {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar .wrap {
+        min-height: 40px;
+        gap: 8px;
+        font-size: 11px;
+      }
+
+      .topbar i {
+        font-size: 19px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .headline-line {
+        white-space: normal;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 46px;
+        height: 44px;
+        flex-basis: 46px;
+      }
+
+      .brand-mark img {
+        width: 46px;
+      }
+
+      .brand-name {
+        font-size: clamp(20px, 6vw, 24px);
+      }
+
+      .brand small {
+        font-size: 9px;
+        white-space: normal;
+        line-height: 1.2;
+      }
+
+      .nav-links {
+        gap: 12px 16px;
+        font-size: 11px;
+      }
+
+      .nav-cta,
+      .btn {
+        width: 100%;
+      }
+
+      .hero-proof,
+      .hero-steps,
+      .industry-grid,
+      .services,
+      .knowledge-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dark-panel,
+      .cta-inner {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .section-head h2::before,
+      .section-head h2::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="wrap">
+        <i class="fa-solid fa-phone"></i>
+        <span>Telephone Number: <strong>641 621 3780</strong></span>
+      </div>
+    </div>
+
+    <nav class="navbar">
+      <div class="wrap nav-inner">
+        <a class="brand" href="#">
+          <span class="brand-mark"><img src="second_small_logo.png" alt="SentraGuarda logo"></span>
+          <span>
+            <span class="brand-name">Sentra<span>Guarda</span></span>
+            <small>Securing Today, Preparing for Tomorrow.</small>
+          </span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-controls="primary-navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-links" id="primary-navigation">
+          <a href="#services">Services <i class="fa-solid fa-chevron-down"></i></a>
+          <a href="#verticals">Verticals <i class="fa-solid fa-chevron-down"></i></a>
+          <a href="#knowledge">Knowledge Base <i class="fa-solid fa-chevron-down"></i></a>
+          <a href="#">Operational Documentation</a>
+          <a href="#why">Why SentraGuarda</a>
+          <a href="#">Privacy &amp; Data Protection</a>
+          <a class="nav-cta" href="#contact">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>
+            <span class="headline-line">Securing <span class="accent">Today.</span></span>
+            <span class="headline-line">Preparing for <span class="accent">Tomorrow.</span></span>
+          </h1>
+          <p>SentraGuarda delivers 24/7 SOC operations, risk-based security, strategic guidance, and proactive preparedness to protect your business today and secure your future.</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Get a Security Assessment <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="btn btn-ghost" href="#services">Explore Our Services</a>
+          </div>
+
+          <div class="hero-proof">
+            <div class="proof-item">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span><strong>24/7 Protection</strong><small>Always Monitoring</small></span>
+            </div>
+            <div class="proof-item">
+              <i class="fa-solid fa-award"></i>
+              <span><strong>Proven Expertise</strong><small>Trusted By Organizations</small></span>
+            </div>
+            <div class="proof-item">
+              <i class="fa-solid fa-briefcase-medical"></i>
+              <span><strong>Future Ready</strong><small>Quantum-Aware Security</small></span>
+            </div>
+            <div class="proof-item">
+              <i class="fa-solid fa-people-group"></i>
+              <span><strong>Human-Centric</strong><small>People. Processes. Protection.</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="dm.png" alt="SentraGuarda security shield">
+        </div>
+
+        <div class="hero-steps">
+          <div class="step">
+            <span class="circle"><i class="fa-solid fa-crosshairs"></i></span>
+            <span><strong>Detect</strong><span>Real-time Threat Detection</span></span>
+          </div>
+          <div class="step">
+            <span class="circle"><i class="fa-solid fa-shield-halved"></i></span>
+            <span><strong>Protect</strong><span>Strengthen Your Security Posture</span></span>
+          </div>
+          <div class="step">
+            <span class="circle"><i class="fa-solid fa-bolt"></i></span>
+            <span><strong>Respond</strong><span>Rapid Incident Response</span></span>
+          </div>
+          <div class="step">
+            <span class="circle"><i class="fa-solid fa-clipboard-check"></i></span>
+            <span><strong>Prepare</strong><span>Be Ready for What's Next</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="light-section" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Our Services</h2>
+          <p>Comprehensive cybersecurity solutions designed for modern threats.</p>
+        </div>
+
+        <div class="services">
+          <article class="service-card" style="--card-color:#6fa1ff">
+            <div class="card-title">
+              <i class="fa-solid fa-shield-halved"></i>
+              <div>
+                <h3>SOC Operations</h3>
+                <p>24/7 monitoring, detection and response</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open Shield Foundational MDR details"><i class="fa-solid fa-shield"></i><span><strong>Shield</strong><small>Foundational MDR</small></span></a>
+              <a href="#" aria-label="Open Fortress Enhanced MDR details"><i class="fa-solid fa-shield"></i><span><strong>Fortress</strong><small>Enhanced MDR</small></span></a>
+              <a aria-label='Open Vanguard Advanced XDR details' href='/2nd'><i class="fa-solid fa-shield"></i><span><strong>Vanguard</strong><small>Advanced XDR</small></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+
+          <article class="service-card" style="--card-color:#21d7c6">
+            <div class="card-title">
+              <i class="fa-solid fa-crosshairs"></i>
+              <div>
+                <h3>Security Testing &amp; Risk Management</h3>
+                <p>Identify, assess and mitigate real-world risks</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open Risk-based Vulnerability Management details"><i class="fa-solid fa-gear"></i><span><strong>Risk-based Vulnerability Management</strong></span></a>
+              <a href="#" aria-label="Open Penetration Testing details"><i class="fa-solid fa-shield"></i><span><strong>Penetration Testing</strong></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+
+          <article class="service-card" style="--card-color:#e383ff">
+            <div class="card-title">
+              <i class="fa-regular fa-user"></i>
+              <div>
+                <h3>Strategy &amp; Execution</h3>
+                <p>Align security strategy with executive excellence</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open CISO-on-Demand details"><i class="fa-solid fa-shield-halved"></i><span><strong>CISO-on-Demand</strong></span></a>
+              <a href="#" aria-label="Open Operations Documentation details"><i class="fa-solid fa-shield-halved"></i><span><strong>Operations Documentation</strong></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+
+          <article class="service-card" style="--card-color:#f0a51a">
+            <div class="card-title">
+              <i class="fa-regular fa-clipboard"></i>
+              <div>
+                <h3>Preparedness Services</h3>
+                <p>Prepare your organization for the unexpected</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open Cybersecurity Tabletop Exercises details"><i class="fa-solid fa-shield"></i><span><strong>Cybersecurity Tabletop Exercises</strong></span></a>
+              <a href="#" aria-label="Open SMB Cybersecurity Readiness Plans details"><i class="fa-solid fa-shield"></i><span><strong>SMB Cybersecurity Readiness Plans</strong></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+
+          <article class="service-card" style="--card-color:#6fa1ff">
+            <div class="card-title">
+              <i class="fa-solid fa-user-shield"></i>
+              <div>
+                <h3>Digital Executive Protection</h3>
+                <p>Protect leaders in a connected world</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open Threat Monitoring for Executives details"><i class="fa-solid fa-shield"></i><span><strong>Threat Monitoring for Executives</strong></span></a>
+              <a href="#" aria-label="Open Identity and Impersonation Protection details"><i class="fa-solid fa-shield-halved"></i><span><strong>Identity and Impersonation Protection</strong></span></a>
+              <a href="#" aria-label="Open Executive Travel Security details"><i class="fa-solid fa-shield"></i><span><strong>Executive Travel Security</strong></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+
+          <article class="service-card" style="--card-color:#21d7c6">
+            <div class="card-title">
+              <i class="fa-solid fa-atom"></i>
+              <div>
+                <h3>Post-Quantum Cryptography</h3>
+                <p>Prepare today for a quantum world</p>
+              </div>
+            </div>
+            <div class="service-list">
+              <a href="#" aria-label="Open Crypto Agility Assessment details"><i class="fa-solid fa-shield"></i><span><strong>Crypto Agility Assessment</strong></span></a>
+              <a href="#" aria-label="Open PQC Readiness Strategy details"><i class="fa-solid fa-shield"></i><span><strong>PQC Readiness Strategy</strong></span></a>
+              <a href="#" aria-label="Open PQC Implementation Support details"><i class="fa-solid fa-shield"></i><span><strong>PQC Implementation Support</strong></span></a>
+            </div>
+            <a class="learn" href="#">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+          </article>
+        </div>
+
+        <div class="mid-grid">
+          <section class="dark-panel" id="verticals">
+            <h2>Industries We Serve</h2>
+            <p>Tailored cybersecurity solutions for your industry.</p>
+            <div class="industry-grid">
+              <div class="industry"><i class="fa-solid fa-tower-cell"></i><span>Utilities</span></div>
+              <div class="industry"><i class="fa-solid fa-flask"></i><span>Medical Clinical Labs</span></div>
+              <div class="industry"><i class="fa-solid fa-building-columns"></i><span>Financial Services</span></div>
+              <div class="industry"><i class="fa-solid fa-scale-balanced"></i><span>Law Offices</span></div>
+              <div class="industry"><i class="fa-solid fa-bell-concierge"></i><span>Hospitality Industry</span></div>
+              <div class="industry"><i class="fa-solid fa-cart-shopping"></i><span>Retail</span></div>
+              <div class="industry"><i class="fa-solid fa-plane"></i><span>Airlines</span></div>
+            </div>
+            <a class="view-link" href="#">View All Verticals <i class="fa-solid fa-arrow-right"></i></a>
+          </section>
+
+          <section class="dark-panel why-panel" id="why">
+            <div>
+              <h2>Why SentraGuarda?</h2>
+              <p>More than technology. A true security partner.</p>
+              <div class="check-list">
+                <div><i class="fa-regular fa-circle-check"></i><span>End-to-end cybersecurity across every layer</span></div>
+                <div><i class="fa-regular fa-circle-check"></i><span>Strategy + execution: from planning to operations</span></div>
+                <div><i class="fa-regular fa-circle-check"></i><span>Proactive threat hunting and risk reduction</span></div>
+                <div><i class="fa-regular fa-circle-check"></i><span>Human-centric approach including executive protection</span></div>
+                <div><i class="fa-regular fa-circle-check"></i><span>Future-ready with PQC and emerging technology readiness</span></div>
+              </div>
+            </div>
+            <div class="ops-photo" aria-label="Security operations center illustration"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="light-section" id="knowledge">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Knowledge Base</h2>
+          <p>Insights, research, and expert perspectives to keep you informed.</p>
+        </div>
+
+        <div class="knowledge-grid">
+          <article class="resource">
+            <i class="fa-regular fa-file-lines"></i>
+            <div><strong>White Papers</strong><span>In-depth research and guides</span></div>
+          </article>
+          <article class="resource">
+            <i class="fa-regular fa-folder-open"></i>
+            <div><strong>Case Studies</strong><span>Real-world challenges and results</span></div>
+          </article>
+          <article class="resource">
+            <i class="fa-solid fa-microphone-lines"></i>
+            <div><strong>Podcasts</strong><span>Conversations with security experts</span></div>
+          </article>
+          <article class="resource">
+            <i class="fa-solid fa-feather-pointed"></i>
+            <div><strong>Articles by the CEO</strong><span>Insights from our leadership</span></div>
+          </article>
+          <article class="resource">
+            <i class="fa-solid fa-chart-line"></i>
+            <div><strong>Industry Reports</strong><span>Trends, analysis and market intelligence</span></div>
+          </article>
+        </div>
+
+        <a class="view-link resources-link" href="#">View All Resources <i class="fa-solid fa-arrow-right"></i></a>
+
+        <section class="bottom-cta" id="contact">
+          <div class="cta-inner">
+            <span class="cta-badge"><img src="second_small_logo.png" alt="SentraGuarda shield"></span>
+            <div>
+              <h2>Ready to Strengthen Your Security?</h2>
+              <p>Let's build a stronger, more secure tomorrow together.</p>
+            </div>
+            <a class="btn btn-primary" href="#">Get a Security Assessment <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="footer-about">
+        <div class="footer-brand">
+          <span class="brand-mark"><img src="second_small_logo.png" alt="SentraGuarda logo"></span>
+          <span>
+            <span class="brand-name">Sentra<span>Guarda</span></span>
+            <small>Securing Today, Preparing for Tomorrow.</small>
+          </span>
+        </div>
+        <p>We help organizations detect threats, reduce risk, and build resilience with comprehensive cybersecurity solutions.</p>
+        <div class="social">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <i class="fa-brands fa-x-twitter"></i>
+          <i class="fa-brands fa-youtube"></i>
+        </div>
+        <div class="copyright">&copy; 2025 SentraGuarda. All rights reserved.</div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#">SOC Operations</a>
+        <a href="#">Security Testing &amp; Risk Management</a>
+        <a href="#">Strategy &amp; Execution</a>
+        <a href="#">Preparedness Services</a>
+        <a href="#">Digital Executive Protection</a>
+        <a href="#">PQC (Post-Quantum Cryptography)</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Verticals</h4>
+        <a href="#">Utilities</a>
+        <a href="#">Medical Clinical Labs</a>
+        <a href="#">Financial Services</a>
+        <a href="#">Law Offices</a>
+        <a href="#">Hospitality Industry</a>
+        <a href="#">Retail</a>
+        <a href="#">Airlines</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">Why SentraGuarda</a>
+        <a href="#">Operational Documentation</a>
+        <a href="#">Privacy &amp; Data Protection</a>
+        <a href="#">Pricing</a>
+        <a href="#">About SentraGuarda</a>
+        <a href="#">Contact Us</a>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <h4>Contact Us</h4>
+        <div class="contact-row"><i class="fa-solid fa-phone"></i><span>641 621 3780</span></div>
+        <div class="contact-row"><i class="fa-regular fa-envelope"></i><span>info@sentraguarda.com</span></div>
+        <div class="contact-row"><i class="fa-solid fa-location-dot"></i><span>Oakville, Canada</span></div>
+        <a class="nav-cta" href="#">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="policy"><span>Privacy Policy</span><span>Terms of Service</span></div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const toggle = document.querySelector(".menu-toggle");
+      if (!toggle) return;
+
+      const nav = toggle.closest(".nav-inner, .nav");
+      const menu = document.getElementById(toggle.getAttribute("aria-controls"));
+      if (!nav || !menu) return;
+
+      const closeMenu = () => {
+        nav.classList.remove("nav-open");
+        toggle.setAttribute("aria-expanded", "false");
+      };
+
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("nav-open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (nav.classList.contains("nav-open") && !nav.contains(event.target)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenu();
+      });
+
+      window.addEventListener("resize", () => {
+        if (getComputedStyle(toggle).display === "none") closeMenu();
+      });
+    })();
+  </script>
+</body>
+</html>
