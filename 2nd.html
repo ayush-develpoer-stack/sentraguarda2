@@ -217,7 +217,7 @@
       padding: 0 clamp(12px, 1.2vw, 18px);
       border: 1px solid rgba(203, 99, 255, 0.75);
       border-radius: 5px;
-      color: #f7e6ff;
+      color: #cc63ff;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
     }
 
@@ -314,7 +314,7 @@
       color: var(--purple-2);
       font-size: clamp(19px, 1.45vw, 25px);
       line-height: 1.28;
-      font-weight: 800;
+      font-weight: 600;
     }
 
     .hero-text {
@@ -324,7 +324,7 @@
       color: #f3f5fb;
       font-size: clamp(15px, 1.05vw, 18px);
       line-height: 1.55;
-      font-weight: 520;
+      /* font-weight: 520; */
     }
 
     .hero-actions,
@@ -437,7 +437,7 @@
       text-align: center;
       font-size: clamp(12px, 0.82vw, 14px);
       line-height: 1.16;
-      font-weight: 750;
+      font-weight: 600;
     }
 
     .signal::before {
@@ -525,7 +525,7 @@
       color: #fff;
       font-size: clamp(20px, 1.55vw, 29px);
       line-height: 1.08;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .panel p {
@@ -533,7 +533,7 @@
       color: #eff2f8;
       font-size: clamp(14px, 1vw, 18px);
       line-height: 1.75;
-      font-weight: 520;
+      /* font-weight: 520; */
     }
 
     .overview p + p {
@@ -571,7 +571,7 @@
       color: #f4f6fc;
       font-size: clamp(13px, 0.92vw, 17px);
       line-height: 1.37;
-      font-weight: 570;
+      /* font-weight: 570; */
     }
 
     .feature-list i {
@@ -622,7 +622,8 @@
       color: #fff;
       font-size: clamp(14px, 1vw, 18px);
       line-height: 1.23;
-      font-weight: 850;
+      /* font-weight: 750; */
+      margin-left: 12px;
     }
 
     .timeline-step span span {
@@ -630,21 +631,23 @@
       color: #d8deeb;
       font-size: clamp(13px, 0.92vw, 17px);
       line-height: 1.44;
-      font-weight: 530;
+      /* font-weight: 530; */
+      margin-left: 12px;
     }
 
 
     .timeline-step:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: 20px;
+  left:30px;
   top: 42px;
   height: 32px;
   border-left: 2px dotted rgba(199, 83, 255, 0.55);
 }
 .number {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
+
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -654,6 +657,7 @@
   font-weight: 900;
   position: relative;
   z-index: 2;
+  margin-left: 13px;
 }
 
     .wide-grid {
@@ -691,7 +695,7 @@
       color: #f1f3fb;
       font-size: clamp(12px, 0.95vw, 17px);
       line-height: 1.35;
-      font-weight: 570;
+      /* font-weight: 570; */
     }
 
     .ideal-list i {
@@ -779,7 +783,7 @@
       color: var(--purple-2);
       font-size: clamp(31px, 2.8vw, 50px);
       line-height: 1.05;
-      font-weight: 900;
+      font-weight: 700;
       text-shadow: 0 0 18px rgba(207, 86, 255, 0.55);
     }
 
@@ -855,7 +859,7 @@
 
     .comparison-title h2 {
       font-size: clamp(20px, 1.55vw, 29px);
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .table-frame {
@@ -881,7 +885,7 @@
       border-right: 1px solid rgba(210, 225, 246, 0.16);
       border-bottom: 1px solid rgba(210, 225, 246, 0.16);
       text-align: center;
-      font-weight: 700;
+      /* font-weight: 700; */
     }
 
     th {
@@ -889,7 +893,7 @@
       border-top: 1px solid rgba(210, 225, 246, 0.16);
       color: #fff;
       font-size: clamp(15px, 1.05vw, 20px);
-      font-weight: 850;
+      /* font-weight: 850; */
     }
 
     th:first-child,
@@ -1261,6 +1265,13 @@
         transform: rotate(90deg);
       }
 
+
+
+
+
+
+
+      
       .comparison {
         overflow-x: auto;
       }
